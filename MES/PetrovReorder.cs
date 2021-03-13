@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MES
 {
-	class PetrovReorder : IReordable
+	public static class PetrovReorder
 	{
-		public ProductTask[] Reorder (ProductTask[] tasks)
+		public static ProductTask[] Reorder (ProductTask[] tasks)
 		{
 			// получаю таски отсортированные по критерию
 			List<List<KeyValuePair<ProductTask, int>>> tasksSumSorted = new List<List<KeyValuePair<ProductTask, int>>>{
@@ -37,24 +37,24 @@ namespace MES
 			return tasksSumSorted[minTimeIndex].Select(pair => pair.Key).ToArray();
 		}
 
-		private List<KeyValuePair<ProductTask, int>> getSortedTasks (ProductTask[] tasks, Func<ProductTask, int> valueSelector, bool askending)
+		private static List<KeyValuePair<ProductTask, int>> getSortedTasks (ProductTask[] tasks, Func<ProductTask, int> valueSelector, bool askending)
 		{
 			var unsortedMatrix = tasks.ToDictionary(task => task, valueSelector).ToList();
 			unsortedMatrix.Sort((one, two) => one.Value.CompareTo(two.Value) * ( askending ? 1 : -1 ));
 			return unsortedMatrix;
 		}
 
-		private int getProductDuration (int[][] matrix)
+		private static int getProductDuration (int[][] matrix)
 		{
 			return matrix.Last().Last();
 		}
 
-		private int[][] getDurationMatrix (List<KeyValuePair<ProductTask, int>> tasks)
+		private static int[][] getDurationMatrix (List<KeyValuePair<ProductTask, int>> tasks)
 		{
 			return getDurationMatrix(tasks.Select(pair => (int[])pair.Key.TimeOnBench.Clone()).ToArray());
 		}
 
-		private int[][] getDurationMatrix (int[][] matrix)
+		private static int[][] getDurationMatrix (int[][] matrix)
 		{
 			var rows = matrix.Length;
 			var cols = matrix.First().Length;
@@ -76,7 +76,7 @@ namespace MES
 			return matrix;
 		}
 
-		private void _printMatrix (int[][] matrix)
+		private static void _printMatrix (int[][] matrix)
 		{
 			var rows = matrix.Length;
 			var cols = matrix.First().Length;

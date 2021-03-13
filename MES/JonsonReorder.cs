@@ -6,9 +6,33 @@ using System.Threading.Tasks;
 
 namespace MES
 {
-	class JonsonReorder : IReordable
+	public static class JonsonReorder
 	{
-		public ProductTask[] Reorder (ProductTask[] tasks)
+
+		public static ProductTask[] FirstRule (ProductTask[] tasks)
+		{
+			var order = FirstBenchLeastTime(tasks);
+			return _sortedTasks(tasks, order).ToArray();
+		}
+
+		public static ProductTask[] SecondRule (ProductTask[] tasks)
+		{
+			var order = LastBenchMostTime(tasks);
+			return _sortedTasks(tasks, order).ToArray();
+		}
+
+		public static ProductTask[] ThirdRule (ProductTask[] tasks)
+		{
+			var order = TotalTime(tasks);
+			return _sortedTasks(tasks, order).ToArray();
+		}
+
+		public static ProductTask[] FourthRule (ProductTask[] tasks)
+		{
+			var order = FarthestBottleNeck(tasks);
+			return _sortedTasks(tasks, order).ToArray();
+		}
+		public static ProductTask[] FifthRule (ProductTask[] tasks)
 		{
 			// вычисляю порядок задач по четырем очередям
 			var firstBench = FirstBenchLeastTime(tasks);
@@ -32,31 +56,35 @@ namespace MES
 			resultingOrder.PrintArray(true);
 
 			// сортирую задачи по очередности
-			var collection = tasks
-				.Zip(resultingOrder, (tsk, order) => new KeyValuePair<int, ProductTask>(order, tsk))
-				.ToList();
-
-			collection.Sort((one, two) => one.Key.CompareTo(two.Key));
-			return collection.Select(pair => pair.Value).ToArray();
+			return _sortedTasks(tasks, resultingOrder).ToArray();
 		}
 
-		private List<int> FirstBenchLeastTime (IEnumerable<ProductTask> tasks)
+		private static IEnumerable<ProductTask> _sortedTasks (IEnumerable<ProductTask> tasks, IEnumerable<int> order)
+		{
+			var collection = tasks
+				.Zip(order, (tsk, o) => new KeyValuePair<int, ProductTask>(o, tsk))
+				.ToList();
+			collection.Sort((one, two) => one.Key.CompareTo(two.Key));
+			return collection.Select(pair => pair.Value);
+		}
+
+		private static List<int> FirstBenchLeastTime (IEnumerable<ProductTask> tasks)
 		{
 			return SortByPredicate(tasks, tsk => tsk.TimeOnBench.First());
 		}
 
-		private List<int> LastBenchMostTime (IEnumerable<ProductTask> tasks)
+		private static List<int> LastBenchMostTime (IEnumerable<ProductTask> tasks)
 		{
 			return SortByPredicate(tasks, tsk => tsk.TimeOnBench.Last(), false);
 		}
 
 
-		private List<int> TotalTime (IEnumerable<ProductTask> tasks)
+		private static List<int> TotalTime (IEnumerable<ProductTask> tasks)
 		{
 			return SortByPredicate(tasks, tsk => tsk.TimeOnBench.Sum());
 		}
 
-		private List<int> SortByPredicate (IEnumerable<ProductTask> tasks, Func<ProductTask, int> predicate, bool askending = true)
+		private static List<int> SortByPredicate (IEnumerable<ProductTask> tasks, Func<ProductTask, int> predicate, bool askending = true)
 		{
 			var collection =
 				tasks.Select(tsk => new KeyValuePair<int, int>(tsk.Number, predicate(tsk))).ToList();
@@ -64,7 +92,7 @@ namespace MES
 			return collection.Select(pair => pair.Key).ToList();
 		}
 
-		private List<int> FarthestBottleNeck (IEnumerable<ProductTask> tasks)
+		private static List<int> FarthestBottleNeck (IEnumerable<ProductTask> tasks)
 		{
 			var taskStack = tasks.ToList();
 			var cols = tasks.First().TimeOnBench.Length;

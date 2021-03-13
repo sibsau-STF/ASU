@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MES
 {
-	class ProductTask
+	public class ProductTask
 	{
 		public readonly int Number;
 		public readonly int[] TimeOnBench;

@@ -40,8 +40,7 @@ namespace MES
 			Console.WriteLine("Data: ");
 			productTasks.PrintArray();
 			Console.WriteLine();
-			IReordable method = new PetrovReorder();
-			var tasks = method.Reorder(productTasks);
+			var tasks = PetrovReorder.Reorder(productTasks);
 			tasks.PrintArray();
 
 			Console.Read();

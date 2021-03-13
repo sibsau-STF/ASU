@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSVService.cs" />
-    <Compile Include="IReordable.cs" />
     <Compile Include="JonsonReorder.cs" />
     <Compile Include="PetrovReorder.cs" />
     <Compile Include="ProductTask.cs" />
