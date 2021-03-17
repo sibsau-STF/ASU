@@ -10,7 +10,7 @@ namespace Jonson.Fourth
 {
 	public class JonsonFourth : IMESPlugin
 	{
-		public string Name => throw new NotImplementedException();
+		public string Name => "Jonson fourth rule";
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{

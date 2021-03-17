@@ -10,7 +10,7 @@ namespace Jonson.Third
 {
 	public class JonsonThird : IMESPlugin
 	{
-		public string Name => throw new NotImplementedException();
+		public string Name => "Jonson third rule";
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{

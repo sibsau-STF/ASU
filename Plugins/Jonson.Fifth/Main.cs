@@ -14,7 +14,7 @@ namespace Jonson.Fifth
 {
 	public class JonsonFifth : IMESPlugin
 	{
-		public string Name => throw new NotImplementedException();
+		public string Name => "Jonson fifth rule (Optimal)";
 
 		private IMESPlugin[] methods =
 		{
