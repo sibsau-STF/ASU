@@ -14,13 +14,12 @@ namespace Jonson.Fourth
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			var order = FarthestBottleNeck(tasks);
-			var sorted = Utils.SortedTasks(tasks, order).ToArray();
+			var sorted = FarthestBottleNeck(tasks).ToArray();
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
 
-		private static List<int> FarthestBottleNeck (IEnumerable<ProductTask> tasks)
+		private static IEnumerable<ProductTask> FarthestBottleNeck (IEnumerable<ProductTask> tasks)
 		{
 			var taskStack = tasks.ToList();
 			var cols = tasks.First().TimeOnBench.Length;
@@ -41,7 +40,7 @@ namespace Jonson.Fourth
 			// сортирую задачи по времени выполнения на втором станке
 			taskStack.Sort((one, two) => -1 * one.TimeOnBench[1].CompareTo(two.TimeOnBench[1]));
 			result.AddRange(taskStack);
-			return result.Select(tsk => tsk.Number).ToList();
+			return result;
 		}
 
 	}

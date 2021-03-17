@@ -97,11 +97,10 @@ namespace MES.Shared
 		public static IEnumerable<ProductTask> SortedTasks (IEnumerable<ProductTask> tasks, Func<ProductTask, int> predicate, bool askending = true)
 		{
 			var collection =
-				tasks.Select(tsk => new KeyValuePair<int, int>(tsk.Number, predicate(tsk))).ToList();
+				tasks.Select(tsk => new KeyValuePair<ProductTask, int>(tsk, predicate(tsk))).ToList();
 			collection.Sort((one, two) => one.Value.CompareTo(two.Value) * ( askending ? 1 : -1 ));
 
-			var order = collection.Select(pair => pair.Key);
-			return SortedTasks(tasks, order);
+			return collection.Select(pair => pair.Key);
 		}
 	}
 }

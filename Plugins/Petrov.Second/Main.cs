@@ -14,7 +14,7 @@ namespace Petrov.Second
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			var sorted = Utils.SortedTasks(tasks, _secondSum, false).ToArray();
+			var sorted = Utils.SortedTasks(tasks, _secondSum, true).ToArray();
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}

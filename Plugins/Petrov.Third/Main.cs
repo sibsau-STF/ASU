@@ -14,7 +14,7 @@ namespace Petrov.Third
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			var sorted = Utils.SortedTasks(tasks, _subtraction).ToArray();
+			var sorted = Utils.SortedTasks(tasks, _subtraction, false).ToArray();
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}

@@ -25,9 +25,10 @@ namespace Petrov.Optimal
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
 			// сортирую задачи всеми методами и устанавливаю на временной шкале
-			var sortedMatrix = methods.Select(m => m.Apply((ProductTask[])tasks.Clone()));
-			foreach ( var sorted in sortedMatrix )
-				Utils.SetStartingTimes(sorted);
+			var sortedMatrix = methods.Select(m => m.Apply(Clone(tasks).ToArray())).ToList();
+
+			//foreach ( var sorted in sortedMatrix )
+			//	sorted.PrintArray();
 
 
 			// определяю длительность каждой очереди
@@ -42,6 +43,11 @@ namespace Petrov.Optimal
 			// возвращаю очередь с минимальной длительностью
 			var minimumIndex = durations.IndexOf(durations.Min());
 			return sortedMatrix.ElementAt(minimumIndex);
+		}
+
+		private IEnumerable<ProductTask> Clone (IEnumerable<ProductTask> tasks)
+		{
+			return tasks.Select(t => new ProductTask(t));
 		}
 	}
 }
