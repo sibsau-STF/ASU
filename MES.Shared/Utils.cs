@@ -85,12 +85,12 @@ namespace MES.Shared
 			}
 		}
 
-		public static IEnumerable<ProductTask> SortedTasks (IEnumerable<ProductTask> tasks, IEnumerable<int> order)
+		public static IEnumerable<ProductTask> SortedTasks (IEnumerable<ProductTask> tasks, IEnumerable<int> order, bool askending = true)
 		{
 			var collection = tasks
 				.Zip(order, (tsk, o) => new KeyValuePair<int, ProductTask>(o, tsk))
 				.ToList();
-			collection.Sort((one, two) => one.Key.CompareTo(two.Key));
+			collection.Sort((one, two) => one.Key.CompareTo(two.Key) * ( askending ? 1 : -1 ));
 			return collection.Select(pair => pair.Value);
 		}
 
