@@ -15,7 +15,9 @@ namespace Jonson.Fourth
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
 			var order = FarthestBottleNeck(tasks);
-			return Utils.SortedTasks(tasks, order).ToArray();
+			var sorted = Utils.SortedTasks(tasks, order).ToArray();
+			Utils.SetStartingTimes(sorted);
+			return sorted;
 		}
 
 		private static List<int> FarthestBottleNeck (IEnumerable<ProductTask> tasks)

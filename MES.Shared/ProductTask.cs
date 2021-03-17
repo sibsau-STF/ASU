@@ -10,6 +10,7 @@ namespace MES
 	{
 		public readonly int Number;
 		public readonly int[] TimeOnBench;
+		public int[] StartTime;
 
 		public ProductTask (int number, int[] benchTime)
 		{
@@ -19,6 +20,11 @@ namespace MES
 
 		public override string ToString ()
 		{
+			if ( StartTime != null )
+			{
+				var timeSpans = StartTime.Zip(TimeOnBench, (s, d) => $"{s}-{d}");
+				return Number + String.Format("[{0}]", String.Join(", ", timeSpans));
+			}
 			return Number + String.Format("[{0}]", String.Join(", ", TimeOnBench));
 		}
 	}

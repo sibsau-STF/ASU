@@ -14,7 +14,9 @@ namespace Jonson.Second
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			return Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Last(), false).ToArray();
+			var sorted = Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Last(), false).ToArray();
+			Utils.SetStartingTimes(sorted);
+			return sorted;
 		}
 	}
 }

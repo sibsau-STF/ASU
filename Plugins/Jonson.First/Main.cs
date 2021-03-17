@@ -15,7 +15,9 @@ namespace Jonson.First
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			return Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.First(), true).ToArray();
+			var sorted = Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.First(), true).ToArray();
+			Utils.SetStartingTimes(sorted);
+			return sorted;
 		}
 
 	}

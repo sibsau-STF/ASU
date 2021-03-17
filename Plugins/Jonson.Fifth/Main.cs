@@ -42,7 +42,9 @@ namespace Jonson.Fifth
 			resultingOrder.PrintArray(true);
 
 			// сортирую задачи по очередности
-			return Utils.SortedTasks(tasks, resultingOrder).ToArray();
+			var sortedTasks = Utils.SortedTasks(tasks, resultingOrder).ToArray();
+			Utils.SetStartingTimes(sortedTasks);
+			return sortedTasks;
 		}
 	}
 }

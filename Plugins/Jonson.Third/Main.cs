@@ -14,7 +14,9 @@ namespace Jonson.Third
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			return Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Sum()).ToArray();
+			var sorted = Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Sum()).ToArray();
+			Utils.SetStartingTimes(sorted);
+			return sorted;
 		}
 	}
 }

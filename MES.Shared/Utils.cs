@@ -26,10 +26,23 @@ namespace MES.Shared
 
 	public static class Utils
 	{
-
-		public static int[][] GetDurationMatrix (List<KeyValuePair<ProductTask, int>> tasks)
+		public static void SetStartingTimes (ProductTask[] tasks)
 		{
-			return GetDurationMatrix(tasks.Select(pair => (int[])pair.Key.TimeOnBench.Clone()).ToArray());
+			var matrix = GetDurationMatrix(tasks);
+			int taskCount = tasks.Length;
+			int benchCount = tasks.First()?.TimeOnBench.Length ?? 0;
+
+			for ( int t = 0; t < taskCount; t++ )
+			{
+				tasks[t].StartTime = new int[benchCount];
+				for ( int time = 0; time < benchCount; time++ )
+					tasks[t].StartTime[time] = matrix[t][time] - tasks[t].TimeOnBench[time];
+			}
+		}
+
+		public static int[][] GetDurationMatrix (IEnumerable<ProductTask> tasks)
+		{
+			return GetDurationMatrix(tasks.Select(t => (int[])t.TimeOnBench.Clone()).ToArray());
 		}
 
 		public static int[][] GetDurationMatrix (int[][] matrix)
