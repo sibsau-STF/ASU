@@ -6,6 +6,24 @@ using System.Threading.Tasks;
 
 namespace MES.Shared
 {
+
+	public static class Extensions
+	{
+		public static void PrintArray<T> (this IEnumerable<T> collection, bool inline = false)
+		{
+			if ( inline )
+				Console.WriteLine(String.Format("[{0}]", String.Join(", ", collection)));
+			else
+				Console.WriteLine(String.Join("\n", collection));
+		}
+
+
+		public static int IndexOf<T> (this T[] collection, T value)
+		{
+			return Array.IndexOf(collection, value);
+		}
+	}
+
 	public static class Utils
 	{
 
@@ -52,6 +70,25 @@ namespace MES.Shared
 					Console.Write(matrix[row][col] + "\t");
 				Console.WriteLine();
 			}
+		}
+
+		public static IEnumerable<ProductTask> SortedTasks (IEnumerable<ProductTask> tasks, IEnumerable<int> order)
+		{
+			var collection = tasks
+				.Zip(order, (tsk, o) => new KeyValuePair<int, ProductTask>(o, tsk))
+				.ToList();
+			collection.Sort((one, two) => one.Key.CompareTo(two.Key));
+			return collection.Select(pair => pair.Value);
+		}
+
+		public static IEnumerable<ProductTask> SortedTasks (IEnumerable<ProductTask> tasks, Func<ProductTask, int> predicate, bool askending = true)
+		{
+			var collection =
+				tasks.Select(tsk => new KeyValuePair<int, int>(tsk.Number, predicate(tsk))).ToList();
+			collection.Sort((one, two) => one.Value.CompareTo(two.Value) * ( askending ? 1 : -1 ));
+
+			var order = collection.Select(pair => pair.Key);
+			return SortedTasks(tasks, order);
 		}
 	}
 }

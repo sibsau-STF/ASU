@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C10528BB-3B0F-4ACD-B801-A35FDE2CBD74}</ProjectGuid>
+    <ProjectGuid>{7872AD4E-498A-4E71-88B1-09DD4A69863E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JonsonFirstRule</RootNamespace>
-    <AssemblyName>JonsonFirstRule</AssemblyName>
+    <RootNamespace>Jonson.Second</RootNamespace>
+    <AssemblyName>Jonson.Second</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,7 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MES.Shared\MES.Shared.csproj">
+    <ProjectReference Include="..\..\MES.Shared\MES.Shared.csproj">
       <Project>{ef7bbf25-a7ff-4634-a96d-97bf813263e2}</Project>
       <Name>MES.Shared</Name>
     </ProjectReference>

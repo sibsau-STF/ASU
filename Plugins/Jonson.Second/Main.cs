@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using MES;
 using MES.Shared;
 
-namespace JonsonFirstRule
+namespace Jonson.Second
 {
-	public class JonsonFirst : IMESPlugin
+	public class JonsonSecond : IMESPlugin
 	{
-		public string Name => "Jonson first rule";
+		public string Name => "Jonson second Rule";
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			throw new NotImplementedException();
+			return Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Last(), false).ToArray();
 		}
 	}
 }

@@ -4,20 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MES.Shared;
 
 namespace MES
 {
-	static class Extensions
-	{
-		public static void PrintArray<T> (this IEnumerable<T> collection, bool inline = false)
-		{
-			if ( inline )
-				Console.WriteLine(String.Format("[{0}]", String.Join(", ", collection)));
-			else
-				Console.WriteLine(String.Join("\n", collection));
-		}
-	}
-
 	class Program
 	{
 

@@ -4,27 +4,25 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1D851AA-D4B9-4461-8398-76EE760AAEB2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>MES</RootNamespace>
-    <AssemblyName>MES</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <ProjectGuid>{95FAFD40-C3CB-42F4-BFD3-068F340ADAD1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jonson.Fifth</RootNamespace>
+    <AssemblyName>Jonson.Fifth</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,15 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PetrovReorder.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MES.Shared\MES.Shared.csproj">
+    <ProjectReference Include="..\Jonson.Fourth\Jonson.Fourth.csproj">
+      <Project>{ba3e9f34-b5e6-45ce-9918-dafdd760e50d}</Project>
+      <Name>Jonson.Fourth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jonson.Second\Jonson.Second.csproj">
+      <Project>{7872ad4e-498a-4e71-88b1-09dd4a69863e}</Project>
+      <Name>Jonson.Second</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jonson.Third\Jonson.Third.csproj">
+      <Project>{f27acd8f-c281-47f8-b5f6-67cf1a01f2e9}</Project>
+      <Name>Jonson.Third</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jonson.First\Jonson.First.csproj">
+      <Project>{c10528bb-3b0f-4acd-b801-a35fde2cbd74}</Project>
+      <Name>Jonson.First</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MES.Shared\MES.Shared.csproj">
       <Project>{ef7bbf25-a7ff-4634-a96d-97bf813263e2}</Project>
       <Name>MES.Shared</Name>
     </ProjectReference>
