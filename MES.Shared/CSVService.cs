@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MES
 {
-	static class CSVService
+	public static class CSVService
 	{
 		static char[] _colSplitters = { ';' };
 		static char[] _rowSplitters = { '\n', '\r' };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MES.Shared;
 
 namespace MES
 {
@@ -17,7 +18,7 @@ namespace MES
 				getSortedTasks(tasks, task => task.TimeOnBench.Last() - task.TimeOnBench.First(), false)
   			};
 			// получаю двумерные матрицы с накопленным временем для каждого случая
-			List<int[][]> durationMatrixies = tasksSumSorted.Select(getDurationMatrix).ToList();
+			List<int[][]> durationMatrixies = tasksSumSorted.Select(Utils.GetDurationMatrix).ToList();
 
 			// вывожу таски и полученные для них матрицы
 			for ( int num = 0; num < 3; num++ )
@@ -26,11 +27,11 @@ namespace MES
 				foreach ( var pair in tasksSumSorted[num] )
 					Console.WriteLine(pair.Key);
 
-				_printMatrix(durationMatrixies[num]);
+				Utils.PrintMatrix(durationMatrixies[num]);
 				Console.WriteLine();
 			}
 			// нахожу время каждой стратегии и получаю номер оптимальной стратегии
-			var totalTimes = durationMatrixies.Select(getProductDuration).ToList();
+			var totalTimes = durationMatrixies.Select(Utils.GetProductDuration).ToList();
 			int minTimeIndex = totalTimes.IndexOf(totalTimes.Min());
 
 			// извлекаю оптимальную последовательность тасков
@@ -42,50 +43,6 @@ namespace MES
 			var unsortedMatrix = tasks.ToDictionary(task => task, valueSelector).ToList();
 			unsortedMatrix.Sort((one, two) => one.Value.CompareTo(two.Value) * ( askending ? 1 : -1 ));
 			return unsortedMatrix;
-		}
-
-		private static int getProductDuration (int[][] matrix)
-		{
-			return matrix.Last().Last();
-		}
-
-		private static int[][] getDurationMatrix (List<KeyValuePair<ProductTask, int>> tasks)
-		{
-			return getDurationMatrix(tasks.Select(pair => (int[])pair.Key.TimeOnBench.Clone()).ToArray());
-		}
-
-		private static int[][] getDurationMatrix (int[][] matrix)
-		{
-			var rows = matrix.Length;
-			var cols = matrix.First().Length;
-
-			// накопление первой строки
-			for ( int col = 0; col < cols; col++ )
-				matrix[0][col] = ( col > 0 ? matrix[0][col - 1] : 0 ) + matrix[0][col];
-
-			for ( int row = 1; row < rows; row++ )
-			{
-				// накопление первого столбца
-				matrix[row][0] = matrix[row][0] + matrix[row - 1][0];
-				// время = время обработки детали + макс из
-				// времени работы прошлого станка для этой детали
-				// и времени обработки предыдущей детали на текущем станке
-				for ( int col = 1; col < cols; col++ )
-					matrix[row][col] = matrix[row][col] + Math.Max(matrix[row - 1][col], matrix[row][col - 1]);
-			}
-			return matrix;
-		}
-
-		private static void _printMatrix (int[][] matrix)
-		{
-			var rows = matrix.Length;
-			var cols = matrix.First().Length;
-			for ( int row = 0; row < rows; row++ )
-			{
-				for ( int col = 0; col < cols; col++ )
-					Console.Write(matrix[row][col] + "\t");
-				Console.WriteLine();
-			}
 		}
 	}
 }
