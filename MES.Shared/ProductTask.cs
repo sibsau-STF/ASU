@@ -32,20 +32,16 @@ namespace MES
 
 		public override bool Equals (object obj)
 		{
-			var task = obj as ProductTask;
-			if (task==null)
-				return base.Equals(obj);
-			return task.Number == Number;
+			return obj is ProductTask task ? task.Number == Number : base.Equals(obj);
 		}
 
 		public override string ToString ()
 		{
-			if ( StartTime != null )
-			{
-				var timeSpans = StartTime.Zip(TimeOnBench, (s, d) => $"{s}-{s + d}");
-				return Number + String.Format("[{0}]", String.Join(", ", timeSpans));
-			}
-			return Number + String.Format("[{0}]", String.Join(", ", TimeOnBench));
+			if ( StartTime == null )
+				return Number.ToString() + $"[{string.Join(", ", TimeOnBench)}]";
+
+			var timeSpans = StartTime.Zip(TimeOnBench, (s, d) => $"{s}-{s + d}");
+			return Number.ToString() + $"[{string.Join(", ", timeSpans)}]";
 		}
 	}
 }

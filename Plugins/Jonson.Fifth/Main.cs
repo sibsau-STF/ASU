@@ -12,7 +12,7 @@ namespace Jonson
 	{
 		public string Name => "Jonson fifth rule (Optimal)";
 
-		private IMESPlugin[] methods =
+		private IMESPlugin[] _methods =
 		{
 			new JonsonFirst(),
 			new JonsonSecond(),
@@ -22,7 +22,7 @@ namespace Jonson
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			var sordedMatrix = methods.Select(m => m.Apply(Clone(tasks).ToArray())).ToArray();
+			var sordedMatrix = _methods.Select(m => m.Apply(_clone(tasks).ToArray())).ToArray();
 
 			//foreach ( ProductTask[] sorted in sordedMatrix )
 			//{
@@ -46,7 +46,7 @@ namespace Jonson
 			return sortedTasks;
 		}
 
-		private IEnumerable<ProductTask> Clone(IEnumerable<ProductTask> tasks)
+		private IEnumerable<ProductTask> _clone(IEnumerable<ProductTask> tasks)
 		{
 			return tasks.Select(t => new ProductTask(t));
 		}

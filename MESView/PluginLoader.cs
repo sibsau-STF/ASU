@@ -11,7 +11,7 @@ namespace MES.View
 	{
 		public static List<IMESPlugin> Plugins { get; set; }
 
-		static FileInfo[] pluginDirs;
+		static FileInfo[] _pluginDirs;
 
 		public void LoadPlugins ()
 		{
@@ -24,8 +24,8 @@ namespace MES.View
 			AppDomain.CurrentDomain.AssemblyResolve += _resolveAssembly;
 
 
-			pluginDirs = new DirectoryInfo("Plugins").GetFiles("*.dll");
-			foreach ( var file in pluginDirs )
+			_pluginDirs = new DirectoryInfo("Plugins").GetFiles("*.dll");
+			foreach ( var file in _pluginDirs )
 				Assembly.LoadFile(file.FullName);
 
 			Type interfaceType = typeof(IMESPlugin);
@@ -43,7 +43,7 @@ namespace MES.View
 		private Assembly _resolveAssembly (object sender, ResolveEventArgs args)
 		{
 			var dllName = args.Name.Split(',')[0];
-			var dll = pluginDirs.FirstOrDefault(fi => fi.Name.Contains(dllName));
+			var dll = _pluginDirs.FirstOrDefault(fi => fi.Name.Contains(dllName));
 			if ( dll == null )
 			{
 				return null;

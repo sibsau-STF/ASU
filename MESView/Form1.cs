@@ -16,9 +16,9 @@ namespace MES.View
 {
 	public partial class Form1 : Form
 	{
-		List<IMESPlugin> plugins;
-		ProductTask[] inputData;
-		ProductTask[] resultData;
+		List<IMESPlugin> _plugins;
+		ProductTask[] _inputData;
+		ProductTask[] _resultData;
 
 		public Form1 ()
 		{
@@ -30,13 +30,14 @@ namespace MES.View
 			if ( openFileDialog1.ShowDialog() == DialogResult.OK )
 			{
 				string path = openFileDialog1.FileName;
-				inputData = readTasks(path);
-				Utils.SetStartingTimes(inputData);
-				plotData(inputPlot, inputData);
+				_inputData = _readTasks(path);
+				Utils.SetStartingTimes(_inputData);
+				_plotData(inputPlot, _inputData);
+				tabControl1.SelectedIndex = 0;
 			}
 		}
 
-		private void plotData (PlotView plot, IEnumerable<ProductTask> tasks)
+		private void _plotData (PlotView plot, IEnumerable<ProductTask> tasks)
 		{
 			var lastTask = tasks.Last();
 			var totalTime = lastTask.StartTime.Last() + lastTask.TimeOnBench.Last();
@@ -66,12 +67,12 @@ namespace MES.View
 			plot.Model = model;
 		}
 
-		static int parseInt (string str) => str == "" ? 0 : int.Parse(str);
+		static int _parseInt (string str) => str == "" ? 0 : int.Parse(str);
 
-		private ProductTask[] readTasks (string path)
+		private ProductTask[] _readTasks (string path)
 		{
 			TextReader reader = new StreamReader(path, Encoding.Default);
-			var table = CSVService.ReadTable(reader, parseInt, true);
+			var table = CSVService.ReadTable(reader, _parseInt, true);
 
 			ProductTask[] productTasks = new ProductTask[table.Length];
 
@@ -90,21 +91,21 @@ namespace MES.View
 			var loader = new PluginLoader();
 			loader.LoadPlugins();
 
-			plugins = PluginLoader.Plugins;
-			plugins.Sort((l, r) => l.Name.CompareTo(r.Name));
+			_plugins = PluginLoader.Plugins;
+			_plugins.Sort((l, r) => l.Name.CompareTo(r.Name));
 
-			methodBox.Items.AddRange(plugins.ToArray());
+			methodBox.Items.AddRange(_plugins.ToArray());
 			methodBox.SelectedIndex = 0;
 		}
 
 		private void evaluateBtn_Click (object sender, EventArgs e)
 		{
 			var plugin = methodBox.SelectedItem as IMESPlugin;
-			if ( plugin == null || inputData == null )
+			if ( plugin == null || _inputData == null )
 				return;
 
-			resultData = plugin.Apply(inputData);
-			plotData(outputPlot, resultData);
+			_resultData = plugin.Apply(_inputData);
+			_plotData(outputPlot, _resultData);
 			tabControl1.SelectedIndex = 1;
 		}
 	}

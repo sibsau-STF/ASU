@@ -9,16 +9,18 @@ namespace MES
 {
 	public static class CSVService
 	{
-		static char[] _colSplitters = { ';' };
-		static char[] _rowSplitters = { '\n', '\r' };
+		static readonly char[] _colSplitters = { ';' };
+		static readonly char[] _rowSplitters = { '\n', '\r' };
 
 		public static T[][] ReadTable<T> (TextReader reader, Func<string, T> converter, bool header)
 		{
+			IEnumerable<T> stringToCollection (string str)
+			{
+				return str.Split(_colSplitters).Select(converter);
+			}
+
 			if ( header )
 				reader.ReadLine();
-
-			Func<string, IEnumerable<T>> stringToCollection =
-									str => str.Split(_colSplitters).Select(converter);
 
 			var lines = reader.ReadToEnd().Split(_rowSplitters, StringSplitOptions.RemoveEmptyEntries);
 

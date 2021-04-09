@@ -14,22 +14,21 @@ namespace Jonson
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			var sorted = FarthestBottleNeck(tasks).ToArray();
+			var sorted = _farthestBottleNeck(tasks).ToArray();
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
 
-		private static IEnumerable<ProductTask> FarthestBottleNeck (IEnumerable<ProductTask> tasks)
+		private static IEnumerable<ProductTask> _farthestBottleNeck (IEnumerable<ProductTask> tasks)
 		{
 			var taskStack = tasks.ToList();
 			var cols = tasks.First().TimeOnBench.Length;
-			List<int> times = new List<int>();
 			List<ProductTask> result = new List<ProductTask>();
 
 			for ( int c = cols - 1; c > 1; c-- )
 			{
 				// получаю время выполнение каждой детали на n, n-1.. станке
-				times = taskStack.Select(tsk => tsk.TimeOnBench[c]).ToList();
+				var times = taskStack.Select(tsk => tsk.TimeOnBench[c]).ToList();
 
 				//перемещаю элемент с максимальным временем выполнения в результат
 				var maxTime = times.Max();
@@ -42,6 +41,7 @@ namespace Jonson
 			result.AddRange(taskStack);
 			return result;
 		}
+
 		public override string ToString () => Name;
 
 	}
