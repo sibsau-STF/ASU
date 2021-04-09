@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MES;
 using MES.Shared;
 
-namespace Petrov.Third
+namespace Petrov
 {
 	public class PetrovThird : IMESPlugin
 	{
@@ -18,6 +18,7 @@ namespace Petrov.Third
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
+		public override string ToString () => Name;
 
 		private int _subtraction (ProductTask task) => task.TimeOnBench.Last() - task.TimeOnBench.First();
 	}

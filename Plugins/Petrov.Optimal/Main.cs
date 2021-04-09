@@ -5,11 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MES;
 using MES.Shared;
-using Petrov.First;
-using Petrov.Second;
-using Petrov.Third;
 
-namespace Petrov.Optimal
+namespace Petrov
 {
 	public class PetrovOptimal : IMESPlugin
 	{
@@ -44,6 +41,8 @@ namespace Petrov.Optimal
 			var minimumIndex = durations.IndexOf(durations.Min());
 			return sortedMatrix.ElementAt(minimumIndex);
 		}
+
+		public override string ToString () => Name;
 
 		private IEnumerable<ProductTask> Clone (IEnumerable<ProductTask> tasks)
 		{

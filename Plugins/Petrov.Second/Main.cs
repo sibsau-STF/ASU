@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MES;
 using MES.Shared;
 
-namespace Petrov.Second
+namespace Petrov
 {
 	public class PetrovSecond : IMESPlugin
 	{
@@ -18,6 +18,8 @@ namespace Petrov.Second
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
+
+		public override string ToString () => Name;
 
 		private int _secondSum (ProductTask task) => task.TimeOnBench.Sum() - task.TimeOnBench.Last();
 

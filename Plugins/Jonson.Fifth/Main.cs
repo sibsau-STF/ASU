@@ -5,12 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MES;
 using MES.Shared;
-using Jonson.First;
-using Jonson.Second;
-using Jonson.Third;
-using Jonson.Fourth;
 
-namespace Jonson.Fifth
+namespace Jonson
 {
 	public class JonsonFifth : IMESPlugin
 	{
@@ -54,5 +50,7 @@ namespace Jonson.Fifth
 		{
 			return tasks.Select(t => new ProductTask(t));
 		}
+
+		public override string ToString () => Name;
 	}
 }

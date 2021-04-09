@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MES;
 using MES.Shared;
 
-namespace Jonson.Third
+namespace Jonson
 {
 	public class JonsonThird : IMESPlugin
 	{
@@ -18,5 +18,7 @@ namespace Jonson.Third
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
+
+		public override string ToString () => Name;
 	}
 }

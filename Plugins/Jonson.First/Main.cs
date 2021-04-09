@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using MES;
 using MES.Shared;
 
-namespace Jonson.First
+namespace Jonson
 {
 	public class JonsonFirst : IMESPlugin
 	{
@@ -19,6 +18,8 @@ namespace Jonson.First
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
+
+		public override string ToString () => Name;
 
 	}
 }

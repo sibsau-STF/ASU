@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MES;
 using MES.Shared;
 
-namespace Jonson.Fourth
+namespace Jonson
 {
 	public class JonsonFourth : IMESPlugin
 	{
@@ -42,6 +42,7 @@ namespace Jonson.Fourth
 			result.AddRange(taskStack);
 			return result;
 		}
+		public override string ToString () => Name;
 
 	}
 }

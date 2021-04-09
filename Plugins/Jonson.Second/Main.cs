@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MES;
 using MES.Shared;
 
-namespace Jonson.Second
+namespace Jonson
 {
 	public class JonsonSecond : IMESPlugin
 	{
@@ -18,5 +18,7 @@ namespace Jonson.Second
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
+
+		public override string ToString () => Name;
 	}
 }
