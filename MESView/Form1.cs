@@ -58,7 +58,8 @@ namespace MES.View
 						X0 = task.StartTime[i],
 						X1 = task.StartTime[i] + task.TimeOnBench[i],
 						Y0 = 0 + i,
-						Y1 = 1 + i
+						Y1 = 1 + i,
+						Title = task.TimeOnBench[i].ToString()
 					});
 
 				}
