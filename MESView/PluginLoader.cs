@@ -11,22 +11,22 @@ namespace MES.View
 	{
 		public static List<IMESPlugin> Plugins { get; set; }
 
-		public void LoadPlugins()
+		static FileInfo[] pluginDirs;
+
+		public void LoadPlugins ()
 		{
 			Plugins = new List<IMESPlugin>();
+			if ( !Directory.Exists("Plugins") )
+				return;
 
 			//Load the DLLs from the Plugins directory
-			if (Directory.Exists("Plugins"))
-			{
-				string[] files = Directory.GetFiles("Plugins");
-				foreach (string file in files)
-				{
-					if (file.EndsWith(".dll"))
-					{
-						Assembly.LoadFile(Path.GetFullPath(file));
-					}
-				}
-			}
+			var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
+			AppDomain.CurrentDomain.AssemblyResolve += _resolveAssembly;
+
+
+			pluginDirs = new DirectoryInfo("Plugins").GetFiles("*.dll");
+			foreach ( var file in pluginDirs )
+				Assembly.LoadFile(file.FullName);
 
 			Type interfaceType = typeof(IMESPlugin);
 			//Fetch all types that implement the interface IPlugin and are a class
@@ -34,11 +34,22 @@ namespace MES.View
 				.SelectMany(a => a.GetTypes())
 				.Where(p => interfaceType.IsAssignableFrom(p) && p.IsClass)
 				.ToArray();
-			foreach (Type type in types)
-			{
-				//Create a new instance of all found types
+
+			//Create a new instance of all found types
+			foreach ( Type type in types )
 				Plugins.Add((IMESPlugin)Activator.CreateInstance(type));
+		}
+
+		private Assembly _resolveAssembly (object sender, ResolveEventArgs args)
+		{
+			var dllName = args.Name.Split(',')[0];
+			var dll = pluginDirs.FirstOrDefault(fi => fi.Name.Contains(dllName));
+			if ( dll == null )
+			{
+				return null;
 			}
+
+			return Assembly.LoadFrom(dll.FullName);
 		}
 	}
 }
