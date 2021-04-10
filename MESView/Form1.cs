@@ -95,6 +95,13 @@ namespace MES.View
 			_plugins = PluginLoader.Plugins;
 			_plugins.Sort((l, r) => l.Name.CompareTo(r.Name));
 
+			if (_plugins.Count < 1)
+			{
+				MessageBox.Show("Плагины не обнаружены");
+				this.Close();
+				return;
+			};
+
 			methodBox.Items.AddRange(_plugins.ToArray());
 			methodBox.SelectedIndex = 0;
 		}
