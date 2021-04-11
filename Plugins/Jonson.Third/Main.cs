@@ -14,7 +14,7 @@ namespace Jonson
 
 		public ProductTask[] Apply (ProductTask[] tasks)
 		{
-			var sorted = Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Sum()).ToArray();
+			var sorted = Utils.SortedTasks(tasks, tsk => tsk.TimeOnBench.Sum(), false).ToArray();
 			Utils.SetStartingTimes(sorted);
 			return sorted;
 		}
